@@ -1,10 +1,24 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
+import Modes from "./Modes";
+import LaptopWindowsIcon from "@mui/icons-material/LaptopWindows";
+import NightsStayIcon from "@mui/icons-material/NightsStay";
+import LightModeIcon from "@mui/icons-material/LightMode";
 
 export default function ThemeSwitch() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  let Icon: React.ReactNode = <LaptopWindowsIcon />;
+  if (theme !== "system") {
+    if (theme === "dark") {
+      Icon = <NightsStayIcon />;
+    } else {
+      Icon = <LightModeIcon className="text-amber-500" />;
+    }
+  }
 
   // useEffect only runs on the client, so now we can safely show the UI
   useEffect(() => {
@@ -15,11 +29,25 @@ export default function ThemeSwitch() {
     return null;
   }
 
+  const handleThemeChange = (theme: string) => {
+    setTheme(theme);
+    setIsModalOpen(false);
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-    <select value={theme} onChange={(e) => setTheme(e.target.value)}>
-      <option value="system">System</option>
-      <option value="dark">Dark</option>
-      <option value="light">Light</option>
-    </select>
+    <>
+      <button onClick={openModal}>{Icon}</button>
+      {isModalOpen && (
+        <Modes onClose={closeModal} onThemeChange={handleThemeChange} />
+      )}
+    </>
   );
 }
