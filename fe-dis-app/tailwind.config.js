@@ -8,10 +8,12 @@ module.exports = {
         light: {
           background: "#f7f7f7",
           text: "#333333",
+          hover: "#e0e0e0",
         },
         dark: {
-          background: "#1a1a1a",
+          background: "#212121",
           text: "#e0e0e0",
+          hover: "#3D3D3D",
         },
       },
     },

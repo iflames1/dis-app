@@ -31,7 +31,6 @@ export default function ThemeSwitch() {
 
   const handleThemeChange = (theme: string) => {
     setTheme(theme);
-    setIsModalOpen(false);
   };
 
   const openModal = () => {
